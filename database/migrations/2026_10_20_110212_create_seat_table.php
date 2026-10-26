@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('seat', function (Blueprint $table) {
             $table->id();
-            $table->integer('hall_id');
+            $table->unsignedBigInteger('hall_id');
             $table->integer('row_num');
             $table->integer('seat_num');
             $table->string('price_category', 100);

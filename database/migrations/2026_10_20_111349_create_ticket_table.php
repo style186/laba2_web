@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('ticket', function (Blueprint $table) {
             $table->id();
-            $table->integer('seSSion_id');
-            $table->integer('seat_id');
+            $table->unsignedBigInteger('seSSion_id');
+            $table->unsignedBigInteger('seat_id');
             $table->string('full_name', 255);
             $table->foreign('seSSion_id')->references('id')->on('seSSions')->cascadeOnDelete();
             $table->foreign('seat_id')->references('id')->on('seat')->cascadeOnDelete();

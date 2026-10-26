@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('movie', function (Blueprint $table) {
             $table->id();
-            $table->string('name_hall', 255);
+            $table->string('name_movie', 255);
             $table->integer('duration_movie');
         });
     }

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('seSSions', function (Blueprint $table) {
             $table->id();
-            $table->integer('hall_id');
-            $table->integer('movie_id');
+            $table->unsignedBigInteger('hall_id');
+            $table->unsignedBigInteger('movie_id');
             $table->timestamp('start_time_date');
             $table->foreign('hall_id')->references('id')->on('hall')->cascadeOnDelete();
             $table->foreign('movie_id')->references('id')->on('movie')->cascadeOnDelete();
