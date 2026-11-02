@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\seats;
+use App\Models\Halls;
 
 class SeatController extends Controller
 {
@@ -11,7 +13,9 @@ class SeatController extends Controller
      */
     public function index()
     {
-        //
+        return view('seats' , [
+            'seats'=> seats::all()
+        ]);
     }
 
     /**
@@ -19,7 +23,9 @@ class SeatController extends Controller
      */
     public function create()
     {
-        //
+        return view('seat_create' , [
+            'halls'=> Halls::all()
+        ]);
     }
 
     /**
@@ -27,9 +33,21 @@ class SeatController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+    $validated = $request->validate([
+        'row_num' => 'required|integer',
+        'seat_num' => 'required|integer',
+        'price_category' => 'required|string|max:100',
+        'hall_id' => 'integer'
 
+    ]);
+    $seat= new seats($validated);
+    $seat->save();
+    return redirect('/seats');
+    } 
+
+
+
+  
     /**
      * Display the specified resource.
      */
@@ -43,7 +61,10 @@ class SeatController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('seat_edit', [
+            'seat' => seats::all()->where('id', $id)->first(),
+            'halls'=> Halls::all()
+    ]);
     }
 
     /**
@@ -51,7 +72,22 @@ class SeatController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+        'row_num' => 'required|integer',
+        'seat_num' => 'required|integer',
+        'price_category' => 'required|string|max:100',
+        'hall_id' => 'integer'
+    ]);
+
+    $seat = seats::all()->where('id', $id)->first();
+    $seat->row_num = $validated['row_num'];
+    $seat->seat_num = $validated['seat_num'];
+    $seat->price_category = $validated['price_category'];
+    $seat->hall_id = $validated['hall_id'];
+    $seat->save();
+
+    return redirect('/seats');         
+     
     }
 
     /**
@@ -59,6 +95,7 @@ class SeatController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        seats::destroy($id);
+        return redirect('/seats');
     }
 }
